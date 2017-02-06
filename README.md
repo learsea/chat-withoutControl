@@ -1,0 +1,1 @@
+tcp聊天+http接口，tcp聊天没有control，使用lvs或者其他工具进行负载均衡配置

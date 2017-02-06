@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd  
+                http://www.springframework.org/schema/tx 
+                http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<import resource="dataSource.xml" />
+
+	<!-- 配置事物管理器 -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 开启事物注解（transaction注解）,不强制使用cglib代理。在 <tx:annotation-driven/>, <aop:aspectj-autoproxy/> 
+		or <aop:config/>三个中任意一个设置 proxy-target-class="true"，都会设使三个强制使用cglib。默认由spring自动选择使用jdk还是cglib。有接口则用jdk，否则使用cglib -->
+	<tx:annotation-driven transaction-manager="txManager" />
+
+	<!-- 配置mybatis的sessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--dataSource属性指定要用到的连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描所有*mapper.xml文件，也可以在mybatis配置文件中一一配置 -->
+		<property name="mapperLocations"
+			value="classpath:com/csy/live/node/tcp/dao/iface/*.xml" />
+		<!-- 扫描bean类，为bean增加别名，也可以在mybatis配置文件中一一配置 -->
+		<property name="typeAliasesPackage" value="com.csy.live.node.tcp.bean.po" />
+		<!-- mybatis配置文件 -->
+		<property name="configLocation" value="classpath:conf/mybatis/configuration.xml" />
+	</bean>
+
+	<!-- 自动扫描mapper类，生成dao代理类。不需要使用MapperFactoryBean一一注册dao类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.csy.live.node.tcp.dao.iface" />
+	</bean>
+
+</beans>

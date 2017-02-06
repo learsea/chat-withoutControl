@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.csy.live.http.dao.iface.UserDao">
+	<select id="getByMobile" parameterType="String" resultMap="user">
+		SELECT * FROM user WHERE mobile = #{mobile};
+	</select>
+
+	<insert id="saveUser" parameterType="user" useGeneratedKeys="true"
+		keyProperty="userId">
+		INSERT INTO user
+		<trim prefix="(" suffix=") " suffixOverrides=",">
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="password != null">
+				passowrd,
+			</if>
+			<if test="nickname != null">
+				nickname,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=") " suffixOverrides=",">
+			<if test="mobile != null">
+				#{mobile},
+			</if>
+			<if test="password != null">
+				#{password},
+			</if>
+			<if test="nickname != null">
+				#{nickname},
+			</if>
+			<if test="icon != null">
+				#{icon},
+			</if>
+		</trim>
+	</insert>
+
+
+	<resultMap type="user" id="user">
+		<id column="user_id" property="userId" />
+	</resultMap>
+</mapper>

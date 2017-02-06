@@ -1,0 +1,4 @@
+2016-03-14 14:13:10 [INFO] -XmlBeanDefinitionReader.loadBeanDefinitions() -Loading XML bean definitions from class path resource [conf/spring/redis.xml]
+2016-03-14 14:13:10 [INFO] -XmlBeanDefinitionReader.loadBeanDefinitions() -Loading XML bean definitions from class path resource [conf/spring/web-mvc.xml]
+2016-03-14 14:13:10 [INFO] -PropertySourcesPlaceholderConfigurer.loadProperties() -Loading properties file from file [E:\workspace\eclipse\live-chat\node-tcp\target\classes\conf\properties\conf.properties]
+2016-03-14 14:13:10 [INFO] -AutowiredAnnotationBeanPostProcessor.<init>() -JSR-330 'javax.inject.Inject' annotation found and supported for autowiring

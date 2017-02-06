@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- c3p0数据源及连接池配置 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<!-- 最小连接数 -->
+		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
+		<!-- 最大连接数 -->
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+		<!-- 初始化连接数 -->
+		<property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
+		<!-- 连接耗尽后，一次性获取的新连接数 -->
+		<property name="acquireIncrement" value="${jdbc.acquireIncrement}" />
+		<!-- 最大空闲时间60*30秒(0.5小时)，内不使用则丢弃 -->
+		<property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
+		<!-- 超过最长连接时间将被摧毁180秒 -->
+		<property name="maxConnectionAge" value="${jdbc.maxConnectionAge}" />
+		<!-- 每个连接的最大PreparedStatements缓存数。设置为频繁使用的PreparedStatements数再加2-3 -->
+		<property name="maxStatementsPerConnection" value="${jdbc.maxStatementsPerConnection}" />
+		<!-- 最大PreparedStatements缓存数。设置为maxStatementsPerConnection乘以maxPoolSize -->
+		<property name="maxStatements" value="${jdbc.maxStatements}" />
+	</bean>
+</beans>

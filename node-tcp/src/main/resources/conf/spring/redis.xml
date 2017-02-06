@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- jedis配置 -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 数设置最大空闲连接书 -->
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <!-- 设置最大连接数 -->
+        <property name="maxTotal" value="${redis.maxTotal}"/>
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+    </bean>
+
+
+	<bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+		<constructor-arg name="jedisClusterNode">
+			<set>
+				<bean class="redis.clients.jedis.HostAndPort" c:host="${redis.masterHost}"
+					c:port="${redis.masterPort}" />
+				<bean class="redis.clients.jedis.HostAndPort" c:host="${redis.slaveHost}"
+					c:port="${redis.slavePort}" />
+			</set>
+		</constructor-arg>
+		<constructor-arg name="timeout" value="${redis.timeout}" />
+		<constructor-arg name="maxRedirections" value="${redis.maxRedirections}" />
+		<constructor-arg name="poolConfig" ref="poolConfig" />
+	</bean>
+</beans>
